@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: atm-machine
+  namespace: argocd
+spec:
+  project: atm-machine
+
+  source:
+    repoURL: https://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@github.com/soucherif/ATM-Machine.git
+    targetRevision: HEAD
+    path: kubernetes
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: atm-app
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
+
+

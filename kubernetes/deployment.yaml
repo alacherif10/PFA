@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mon-app
+  namespace: argocd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mon-app
+  template:
+    metadata:
+      labels:
+        app: mon-app
+    spec:
+      containers:
+        - name: atm-machine-container
+          image: soucherif/atm-app:138
+      
+                

@@ -1,0 +1,39 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Exécute le pipeline à chaque push sur la branche `main`
+
+jobs:
+  CI-Pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.TOKEN_GITHUB }}
+
+      - name: Install Maven
+        run: sudo apt-get update && sudo apt-get install -y maven
+
+      - name: Run Unit Tests
+        run: mvn test
+
+      - name: Run Integration Tests
+        run: mvn verify
+
+      - name: Set up environment variables
+        run: |
+          echo "SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}" >> $GITHUB_ENV
+          echo "SONAR_HOST_URL=https://715d-197-2-214-127.ngrok-free.app" >> $GITHUB_ENV
+          echo "SONAR_PROJECT_KEY=my-project-key" >> $GITHUB_ENV
+          echo "SONAR_ORGANIZATION=my-org" >> $GITHUB_ENV
+
+      - name: SonarQube Scan
+        run: mvn clean verify sonar:sonar
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://715d-197-2-214-127.ngrok-free.app
+          SONAR_PROJECT_KEY: my-project-key
+          SONAR_ORGANIZATION: my-org

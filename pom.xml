@@ -35,6 +35,19 @@
     <finalName>atm-machine</finalName>
   </build>
 
+  <distributionManagement>
+    <repository>
+      <id>maven-releases</id>
+      <url>http://3.87.158.54:8081/repository/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>maven-snapshots</id>
+      <url>http://3.87.158.54:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+    
+  
+  
   <name>atm-machine</name>
   <url>http://maven.apache.org</url>
 
